@@ -67,11 +67,11 @@
 					</div>
 					<div class="scrollmenu menu-two animated fadeInRight faster">
 						<a id="arrow-left" href="#arrow-left"><img src="<?= base_url() ?>assets/images/arrow_left.png"/></a>
-						<a class='berita-artikel' href="#berita-artikel">Berita dan Artikel</a>
+						<a class='berita' href="#berita">Berita dan Artikel</a>
 						<a class='kalender' href="#kalender">Kalender Akademik</a>
-						<a class='versi-mobile' href="#versi-mobile">Versi Mobile</a>
-						<a class='kritik-saran' href="#kritik-saran">Kritik dan Saran</a>
-						<a class='visi-misi' href="#visi-misi">Visi Misi</a>
+						<a class='mobile' href="#versi-mobile">Versi Mobile</a>
+						<a class='kritik' href="#kritik-saran">Kritik dan Saran</a>
+						<a class='visi' href="#visi-misi">Visi Misi</a>
 					</div>
 				</div>
 			</div>
@@ -101,6 +101,14 @@
             }
         });
     }
+
+    function setDateTime() {
+        var today = new Date();
+        $(".date").html(today.getDate()+'-'+(today.getUTCMonth()+1)+'-'+today.getFullYear());
+        $(".time").html(today.getHours() + ":" + today.getMinutes());
+	}
+
+	setDateTime();
 
     //INIT MENU
     menuOpen($('.beranda'), "beranda");
@@ -132,36 +140,40 @@
     $('.informasi-lantai').click(function () {
         menuOpen($(this), "informasi-lantai");
     });
+    //INFORMASI LANTAI
+    $('.acara').click(function () {
+        menuOpen($(this), "acara");
+    });
     //BERITA ARTIKEL
-    $('.berita-artikel').click(function () {
-        menuOpen($(this), "berita-artikel");
+    $('.berita').click(function () {
+        menuOpen($(this), "berita");
     });
     //KALENDER
     $('.kalender').click(function () {
         menuOpen($(this), "kalender");
     });
     //VERSI MOBILE
-    $('.versi-mobile').click(function () {
-        menuOpen($(this), "versi-mobile");
+    $('.mobile').click(function () {
+        menuOpen($(this), "mobile");
     });
     //KRITIK SARAN
-    $('.kritik-saran').click(function () {
-        menuOpen($(this), "kritik-saran");
+    $('.kritik').click(function () {
+        menuOpen($(this), "kritik");
     });
     //VISI MISI
-    $('.visi-misi').click(function () {
-        menuOpen($(this), "visi-misi");
+    $('.visi').click(function () {
+        menuOpen($(this), "visi");
     });
 
     function resetMenu() {
         $('.beranda').removeClass("active");
         $('.tour').removeClass("active");
         $('.informasi-lantai').removeClass("active");
-        $('.berita-artikel').removeClass("active");
+        $('.berita').removeClass("active");
         $('.kalender').removeClass("active");
-        $('.versi-mobile').removeClass("active");
-        $('.kritik-saran').removeClass("active");
-        $('.visi-misi').removeClass("active");
+        $('.mobile').removeClass("active");
+        $('.kritik').removeClass("active");
+        $('.visi').removeClass("active");
     }
 </script>
 </html>

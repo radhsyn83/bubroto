@@ -301,3 +301,108 @@ body::-webkit-scrollbar, html::-webkit-scrollbar {
 }
 
 
+.see-more h4 {
+	font-size: 50px;
+	margin-bottom: 15px;
+	color: #FFF;
+	line-height: 100%;
+	letter-spacing: 0.5px;
+	font-weight: 600;
+}
+
+.see-more p {
+	font-size: 18px;
+	margin-bottom: 15px;
+	color: #d5d5d5;
+}
+
+.see-more a {
+	background: #276BCC;
+	font-size: 14px;
+	color: #FFF;
+	padding: 13px 32px;
+	display: inline-block;
+}
+
+.see-more a:hover {
+	background: #264a93;
+	text-decoration: none;
+}
+
+.see-more h4 {
+	-webkit-animation-name: fadeInLeft;
+	animation-name: fadeInLeft;
+}
+
+.see-more p {
+	-webkit-animation-name: slideInRight;
+	animation-name: slideInRight;
+}
+
+.see-more a {
+	-webkit-animation-name: fadeInUp;
+	animation-name: fadeInUp;
+}
+
+.card-footer {
+
+}
+
+.card-footer-title span {
+	color: white;
+	font-size: larger;
+	font-weight: 600;
+}
+
+.card-footer-date {
+	padding-left: 10px;
+	margin-top: 10px;
+}
+
+.card-footer-date span {
+	color: white;
+}
+
+.card-footer-place {
+	margin-top: 5px;
+	padding-left: 12px;
+}
+
+.card-footer-place span {
+	color: white;
+}
+
+.kalender .date {
+	color: white;
+	border-radius: 10px;
+}
+
+.kalender-active {
+	background-color: #276BCC;
+}
+
+.kalender .date span {
+	color: white;
+}
+
+.kalender .title{
+	color: white;
+	top: 20%;
+	transform: translate(0%, -50%);
+	position: relative;
+}
+
+.kalender .time{
+	color: #C1C1C1;top: 20%;
+	transform: translate(0%, -50%);
+	position: relative;
+}
+
+.vertical-underline {
+	display: block; height: 1px;
+	border: 0; border-top: 1px solid #ccc;
+	margin: 1em 0;
+	padding: 0;
+}
+
+
