@@ -5,7 +5,7 @@ class Welcome extends MY_Controller {
 
 	public function index()
 	{
-		$data["base_url"] = base_url();
-		$this->load->view('welcome_message', $data);
+//		$data["base_url"] = base_url();
+//		$this->load->view('welcome_message', $data);
 	}
 }
