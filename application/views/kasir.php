@@ -1,4 +1,0 @@
-<div>
-	Halo Kasir
-</div>
-

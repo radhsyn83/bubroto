@@ -46,7 +46,47 @@ class Koki extends CI_Controller
 	function set_selesai()
 	{
 		$id = $this->input->post("id");
+		$this->db->trans_begin();
+
+		//GET BAHAN_REQUEST
+		$bahan = $this->db->get_where("detail_pesanan", array('id' => $id))->row();
+
+		//GET MENU
+		$menu = $this->db->get_where("menu_bahan", array('id_menu' => $bahan->id_menu))->result();
+
+		//INSERT KE BAHAN STOK
+
+		foreach ($menu as $m) {
+			$dataInsert = array(
+				'id_pantry' => 7,
+				'id_bahan' => $m->id_bahan,
+				'stok' => (($m->kebutuhan * $bahan->jumlah) * -1),
+				'status' => 2
+			);
+
+			$this->db->insert("bahan_stok", $dataInsert);
+		}
+
+		//UPDATE STATUS ke SELESAI
 		$this->db->set('status', 3);
+		$this->db->where('id', $id);
+		$this->db->update('detail_pesanan');
+
+		if ($this->db->trans_status() === FALSE)
+		{
+			$this->db->trans_rollback();
+		}
+		else
+		{
+			$this->db->trans_commit();
+			JSON(null);
+		}
+	}
+
+	function set_habis()
+	{
+		$id = $this->input->post("id");
+		$this->db->set('status', 4);
 		$this->db->where('id', $id);
 		$this->db->update('detail_pesanan');
 		JSON(null);
@@ -77,7 +117,20 @@ class Koki extends CI_Controller
 		JSON($query->result());
 	}
 
-	public function addOrUpdateMenu() {
+	public function get_bahan_baku()
+	{
+		$dataSelect["active"] = 1;
+		$query = $this->db->select("bs.id_bahan, sum(bs.stok) as sisa, bh.nama, bh.satuan, (SELECT COUNT(br.id) as tersedia FROM bahan_request br WHERE br.id_bahan = bs.id_bahan AND br.status = 0 ORDER BY br.id_bahan DESC LIMIT 1) as request")
+			->from("bahan bh")
+			->join("bahan_stok bs", "bh.id = bs.id_bahan")
+			->where($dataSelect)
+			->group_by("bs.id_bahan")
+			->get();
+		JSON($query->result());
+	}
+
+	public function addOrUpdateMenu()
+	{
 		$params = $this->input->post();
 
 		if ($params["m_id"] != "") {
@@ -99,7 +152,8 @@ class Koki extends CI_Controller
 		echo json_encode("ea");
 	}
 
-	public function addOrUpdateBahan() {
+	public function addOrUpdateBahan()
+	{
 		$params = $this->input->post();
 
 		if ($params["f_id"] != "") {
@@ -122,7 +176,8 @@ class Koki extends CI_Controller
 		echo json_encode("ea");
 	}
 
-	public function addOrUpdateBahanBaku() {
+	public function addOrUpdateBahanBaku()
+	{
 		$params = $this->input->post();
 
 		if ($params["f_id"] != "") {
@@ -164,6 +219,16 @@ class Koki extends CI_Controller
 		$this->db->set('active', 0);
 		$this->db->where('id', $id);
 		$this->db->update('bahan');
+		echo json_encode("a");
+	}
+
+	function request_bahan() {
+		$params = $this->input->post();
+		$dataInsert = array(
+			'id_bahan' => $params["m_id"],
+			'kebutuhan' => $params["m_jumlah"],
+		);
+		$this->db->insert('bahan_request', $dataInsert);
 		echo json_encode("a");
 	}
 

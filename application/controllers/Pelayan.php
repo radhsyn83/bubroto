@@ -56,14 +56,35 @@ GROUP BY bs.id_bahan");
 		$menu = $this->db->get_where("menu", array("id" => $id))->row();
 
 		$meja = $this->db->get_where("pesanan", array("nomor_meja" => $nomor_meja, "status" => 0));
+
+
 		if ($meja->num_rows() > 0) {
 			//insert menu
+			$dataInsert["id_menu"] = $menu->id;
 			$dataInsert["id_pesanan"] = $meja->row()->id;
 			$dataInsert["nama_menu"] = $menu->nama;
 			$dataInsert["harga"] = $menu->harga;
 			$dataInsert["jumlah"] = 1;
 			$dataInsert["status"] = 1;
 			$this->db->insert("detail_pesanan", $dataInsert);
+			$this->updateMeja($nomor_meja);
+		} else {
+			//INSERT MEJA
+			$dataInsertMeja["id_pelayan"] = $this->session->userdata("id");
+			$dataInsertMeja["nomor_meja"] = $nomor_meja;
+			$dataInsertMeja["status"] = 0;
+			$this->db->insert("pesanan", $dataInsertMeja);
+
+			//insert menu
+			$dataInsert["id_menu"] = $menu->id;
+			$dataInsert["id_pesanan"] = $this->db->insert_id();
+			$dataInsert["nama_menu"] = $menu->nama;
+			$dataInsert["harga"] = $menu->harga;
+			$dataInsert["jumlah"] = 1;
+			$dataInsert["status"] = 1;
+			$this->db->insert("detail_pesanan", $dataInsert);
+			$this->updateMeja($nomor_meja);
+
 			$this->updateMeja($nomor_meja);
 		}
 	}

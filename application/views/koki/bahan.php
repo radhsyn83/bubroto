@@ -13,6 +13,7 @@
 		<tr>
 			<th scope="col">#</th>
 			<th scope="col">Nama</th>
+			<th scope="col">Sisa</th>
 			<th scope="col">Satuan</th>
 			<th scope="col">Aksi</th>
 		</tr>
@@ -62,11 +63,45 @@
 	</div>
 </div>
 
+<!--Modal-->
+<div class="modal fade" id="modalRequest" tabindex="-1" role="dialog" aria-labelledby="basicModalLabel"
+	 aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="container">
+				<br>
+				<h5 id="basicModalLabel" id="bahan-title">Request Bahan</h5>
+			</div>
+
+			<form id="request-form">
+				<div class="modal-body">
+					<div class="form-group">
+						<div class="input-group">
+
+							<input type="text" class="form-control" id="m_jumlah" name="m_jumlah"
+								   placeholder="Masukkan jumlah kebutuhan">
+							<div class="input-group-append">
+								<span class="input-group-text" id="satuan">@</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary" id="bahan-btn">Request Bahan</button>
+				</div>
+				<input type="hidden" id="m_id" name="m_id"/>
+
+			</form>
+		</div>
+	</div>
+</div>
+
 <script>
     var jsonBahan = "";
 
     function get_bahan() {
-        let url = "<?= base_url('koki/get_list_bahan') ?>";
+        let url = "<?= base_url('koki/get_bahan_baku') ?>";
         $.ajax({
             url: url,
             dataType: "JSON",
@@ -74,15 +109,22 @@
             data: {},
             success: function (d) {
                 jsonBahan = d.data;
-				let a = ""
+                let a = ""
                 for (let i = 0; i < jsonBahan.length; i++) {
+                    var requested = ""
+                    if (jsonBahan[i].request == "1") {
+                        requested = "disabled"
+                    }
+                    console.log(jsonBahan[i].request);
                     let btn = '<div class="list-with-gap">\n' +
                         '              <button type="button" class="btn btn-success btn-xs" onclick="showModal(`' + i + '`)">Ubah</button>\n' +
+                        '              <button type="button" class="btn btn-warning btn-xs" ' + requested + ' onclick="showModalrequest(`' + i + '`)">Request</button>\n' +
                         '              <button type="button" class="btn btn-danger btn-xs" onclick="showConfirm(hapusBahan,' + jsonBahan[i].id + ', `Bahan akan dihapus, Apakah anda yakin?`)">Hapus</button>\n' +
                         '            </div>';
                     a += '<tr>\n' +
                         '\t\t\t<td scope="col">' + (i + 1) + '</td>\n' +
                         '\t\t\t<td scope="col">' + jsonBahan[i].nama + '</td>\n' +
+                        '\t\t\t<td scope="col">' + jsonBahan[i].sisa + '</td>\n' +
                         '\t\t\t<td scope="col">' + jsonBahan[i].satuan + '</td>\n' +
                         '\t\t\t<td scope="col">' + btn + '</td>\n' +
                         '\t\t</tr>'
@@ -154,5 +196,28 @@
         })
 
         $("#modalBahanBaku").modal("hide")
+    })
+
+	function showModalrequest(index) {
+		$("#modalRequest").modal("show");
+		$("#satuan").html(jsonBahan[index].satuan)
+		$("#m_id").val(jsonBahan[index].id_bahan)
+    }
+
+    $("#request-form").on("submit", function (e) {
+        e.preventDefault();
+        let url = "<?= base_url('koki/request_bahan') ?>";
+
+        $.ajax({
+            url: url,
+            dataType: "JSON",
+            method: "POST",
+            data: $(this).serialize(),
+            success: function () {
+                get_bahan()
+            }
+        })
+
+        $("#modalRequest").modal("hide")
     })
 </script>

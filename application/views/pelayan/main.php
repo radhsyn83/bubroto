@@ -99,7 +99,7 @@
 			<div class="col-9">
 				<div class="list-with-gap">
 					<button id="bt-menu" type="button" class="btn btn-success" disabled>Menu</button>
-					<button id="bt-pembayaran" type="button" class="btn btn-primary" disabled>Pembayaran</button>
+<!--					<button id="bt-pembayaran" type="button" class="btn btn-primary" disabled>Pembayaran</button>-->
 				</div>	</div>
 		</div>
 

@@ -170,174 +170,174 @@
 
 </script>
 
-
-<script>
-    let carts_item = null;
-    let nomor_meja = null;
-
-    function get_menu() {
-        let nomor_meja = $('#nomor_meja').val();
-        let url = "<?= base_url('pelayan/get_menu') ?>";
-        $.ajax({
-            url: url,
-            dataType: "JSON",
-            method: "POST",
-            data: {'nomor_meja': nomor_meja},
-            success: function (d) {
-                a = "";
-                for (let i = 0; i < d.length; i++) {
-                    a += '<tr>\n' +
-                        '\t\t\t\t\t\t\t\t<td scope="col">'+(i+1)+'</td>\n' +
-                        '\t\t\t\t\t\t\t\t<td scope="col">'+d[i].nama+'</td>\n' +
-                        '\t\t\t\t\t\t\t\t<td scope="col">'+d[i].harga+'</td>\n' +
-                        '\t\t\t\t\t\t\t\t<td scope="col"><button type="button" class="btn btn-success btn-xs" onclick="add_menu(\''+d[i].id+'\')">Pilih</button></td>\n' +
-                        '\t\t\t\t\t\t\t</tr>'
-                }
-
-                $('#body-menu').html(a);
-            }
-        });
-    }
-
-    $('#bt-menu').on("click",function (e) {
-        $('#modalMenu').modal('show');
-        get_menu();
-    });
-
-    function get_meja() {
-        nomor_meja = $('#nomor_meja').val();
-        let url = "<?= base_url('pelayan/get_meja') ?>";
-
-        $.ajax({
-            url: url,
-            dataType: "JSON",
-            method: "POST",
-            data: {'nomor_meja': nomor_meja},
-            success: function (d) {
-                loadCart(d.data);
-            }
-        });
-    }
-
-    function loadCart(c) {
-        let carts = c.list;
-
-        if (carts.length > 0) {
-            carts_item = carts;
-            let a = "";
-            for (let i = 0; i < carts.length; i++) {
-                let status = "";
-                let btn = "";
-                if (carts[i].status === "0") {
-                    status = '<span class="badge badge-danger">batal</span>';
-                } else if (carts[i].status === "1") {
-                    status = '<span class="badge badge-warning">waiting</span>';
-                    btn = '<div class="btn-group" role="group">\n' +
-                        '                <button type="button" class="btn btn-text-primary btn-icon rounded-circle" onclick="add(\''+carts[i].id+'\')" ><i class="material-icons">add</i></button>\n' +
-                        '                <button type="button" class="btn btn-text-success btn-icon rounded-circle" onclick="minus(\''+carts[i].id+'\')" ><i class="material-icons">remove</i></button>\n' +
-                        '                <button type="button" class="btn btn-text-danger btn-icon rounded-circle" onclick="hapus(\''+carts[i].id+'\')" ><i class="material-icons">delete</i></button>\n' +
-                        '              </div>'
-                } else if (carts[i].status === "2") {
-                    status = '<span class="badge badge-primary">proses</span>';
-                    btn = '<button type="button" class="btn btn-success btn-xs" onclick="set_selesai(\''+carts[i].id+'\')">Selesai</button>'
-                } else {
-                    status = '<span class="badge badge-success">selesai</span>';
-                }
-                let total_harga = carts[i].harga * carts[i].jumlah
-                a += "\n" +
-                    "\t<tr>\n" +
-                    "\t\t<th scope=\"row\">" + (i + 1) + "</th>\n" +
-                    "\t\t<td>" + carts[i].nama_menu + "</td>\n" +
-                    "\t\t<td class=\"font-number\">" + carts[i].harga + "</td>\n" +
-                    "\t\t<td>" + carts[i].jumlah + "</td>\n" +
-                    "\t\t<td>"+status+"</td>\n" +
-                    "\t\t<td class=\"font-number\">" + total_harga + "</td>\n" +
-                    "\t\t<td>"+ btn +"</td>\n" +
-                    "\t</tr>"
-            }
-            $('#body-cart').html(a);
-        } else {
-            carts_item = null;
-            $('#body-cart').html("<tr>\n" +
-                "\t\t<th scope=\"row\" colspan=\"7\"><center>Keranjang masih kosong.</center></th>\n" +
-                "\t</tr>");
-        }
-
-        $('#cart-item').html('x'+c.grand.total_item);
-        $('#cart-total').html('Rp'+c.grand.total_harga);
-
-        $('#bt-menu').prop("disabled", false);
-        $('#bt-pembayaran').prop("disabled", false);
-
-    }
-
-    function set_selesai(id) {
-        let url = "<?= base_url('pelayan/set_selesai') ?>";
-        $.ajax({
-            url: url,
-            dataType: "JSON",
-            method: "POST",
-            data: {'id': id, 'nomor_meja': nomor_meja},
-            success: function (d) {
-                loadCart(d.data);
-            }
-        });
-    }
-
-    function hapus(id) {
-        let url = "<?= base_url('pelayan/hapus') ?>";
-        $.ajax({
-            url: url,
-            dataType: "JSON",
-            method: "POST",
-            data: {'id': id, 'nomor_meja': nomor_meja},
-            success: function (d) {
-                loadCart(d.data);
-            }
-        });
-    }
-
-    function add(id) {
-        let url = "<?= base_url('pelayan/add') ?>";
-        $.ajax({
-            url: url,
-            dataType: "JSON",
-            method: "POST",
-            data: {'id': id, 'nomor_meja': nomor_meja},
-            success: function (d) {
-                loadCart(d.data);
-            }
-        });
-    }
-
-    function minus(id) {
-        let url = "<?= base_url('pelayan/minus') ?>";
-        $.ajax({
-            url: url,
-            dataType: "JSON",
-            method: "POST",
-            data: {'id': id, 'nomor_meja': nomor_meja},
-            success: function (d) {
-                loadCart(d.data);
-            }
-        });
-    }
-
-    function add_menu(id) {
-        let url = "<?= base_url('pelayan/add_menu') ?>";
-        $.ajax({
-            url: url,
-            dataType: "JSON",
-            method: "POST",
-            data: {'id': id, 'nomor_meja': nomor_meja},
-            success: function (d) {
-                $("#modalMenu").modal("hide");
-                loadCart(d.data);
-            }
-        });
-    }
-
-</script>
+<!---->
+<!--<script>-->
+<!--    let carts_item = null;-->
+<!--    let nomor_meja = null;-->
+<!---->
+<!--    function get_menu() {-->
+<!--        let nomor_meja = $('#nomor_meja').val();-->
+<!--        let url = "--><?//= base_url('pelayan/get_menu') ?>//";
+//        $.ajax({
+//            url: url,
+//            dataType: "JSON",
+//            method: "POST",
+//            data: {'nomor_meja': nomor_meja},
+//            success: function (d) {
+//                a = "";
+//                for (let i = 0; i < d.length; i++) {
+//                    a += '<tr>\n' +
+//                        '\t\t\t\t\t\t\t\t<td scope="col">'+(i+1)+'</td>\n' +
+//                        '\t\t\t\t\t\t\t\t<td scope="col">'+d[i].nama+'</td>\n' +
+//                        '\t\t\t\t\t\t\t\t<td scope="col">'+d[i].harga+'</td>\n' +
+//                        '\t\t\t\t\t\t\t\t<td scope="col"><button type="button" class="btn btn-success btn-xs" onclick="add_menu(\''+d[i].id+'\')">Pilih</button></td>\n' +
+//                        '\t\t\t\t\t\t\t</tr>'
+//                }
+//
+//                $('#body-menu').html(a);
+//            }
+//        });
+//    }
+//
+//    $('#bt-menu').on("click",function (e) {
+//        $('#modalMenu').modal('show');
+//        get_menu();
+//    });
+//
+//    function get_meja() {
+//        nomor_meja = $('#nomor_meja').val();
+//        let url = "<?//= base_url('pelayan/get_meja') ?>//";
+//
+//        $.ajax({
+//            url: url,
+//            dataType: "JSON",
+//            method: "POST",
+//            data: {'nomor_meja': nomor_meja},
+//            success: function (d) {
+//                loadCart(d.data);
+//            }
+//        });
+//    }
+//
+//    function loadCart(c) {
+//        let carts = c.list;
+//
+//        if (carts.length > 0) {
+//            carts_item = carts;
+//            let a = "";
+//            for (let i = 0; i < carts.length; i++) {
+//                let status = "";
+//                let btn = "";
+//                if (carts[i].status === "0") {
+//                    status = '<span class="badge badge-danger">batal</span>';
+//                } else if (carts[i].status === "1") {
+//                    status = '<span class="badge badge-warning">waiting</span>';
+//                    btn = '<div class="btn-group" role="group">\n' +
+//                        '                <button type="button" class="btn btn-text-primary btn-icon rounded-circle" onclick="add(\''+carts[i].id+'\')" ><i class="material-icons">add</i></button>\n' +
+//                        '                <button type="button" class="btn btn-text-success btn-icon rounded-circle" onclick="minus(\''+carts[i].id+'\')" ><i class="material-icons">remove</i></button>\n' +
+//                        '                <button type="button" class="btn btn-text-danger btn-icon rounded-circle" onclick="hapus(\''+carts[i].id+'\')" ><i class="material-icons">delete</i></button>\n' +
+//                        '              </div>'
+//                } else if (carts[i].status === "2") {
+//                    status = '<span class="badge badge-primary">proses</span>';
+//                    btn = '<button type="button" class="btn btn-success btn-xs" onclick="set_selesai(\''+carts[i].id+'\')">Selesai</button>'
+//                } else {
+//                    status = '<span class="badge badge-success">selesai</span>';
+//                }
+//                let total_harga = carts[i].harga * carts[i].jumlah
+//                a += "\n" +
+//                    "\t<tr>\n" +
+//                    "\t\t<th scope=\"row\">" + (i + 1) + "</th>\n" +
+//                    "\t\t<td>" + carts[i].nama_menu + "</td>\n" +
+//                    "\t\t<td class=\"font-number\">" + carts[i].harga + "</td>\n" +
+//                    "\t\t<td>" + carts[i].jumlah + "</td>\n" +
+//                    "\t\t<td>"+status+"</td>\n" +
+//                    "\t\t<td class=\"font-number\">" + total_harga + "</td>\n" +
+//                    "\t\t<td>"+ btn +"</td>\n" +
+//                    "\t</tr>"
+//            }
+//            $('#body-cart').html(a);
+//        } else {
+//            carts_item = null;
+//            $('#body-cart').html("<tr>\n" +
+//                "\t\t<th scope=\"row\" colspan=\"7\"><center>Keranjang masih kosong.</center></th>\n" +
+//                "\t</tr>");
+//        }
+//
+//        $('#cart-item').html('x'+c.grand.total_item);
+//        $('#cart-total').html('Rp'+c.grand.total_harga);
+//
+//        $('#bt-menu').prop("disabled", false);
+//        $('#bt-pembayaran').prop("disabled", false);
+//
+//    }
+//
+//    function set_selesai(id) {
+//        let url = "<?//= base_url('pelayan/set_selesai') ?>//";
+//        $.ajax({
+//            url: url,
+//            dataType: "JSON",
+//            method: "POST",
+//            data: {'id': id, 'nomor_meja': nomor_meja},
+//            success: function (d) {
+//                loadCart(d.data);
+//            }
+//        });
+//    }
+//
+//    function hapus(id) {
+//        let url = "<?//= base_url('pelayan/hapus') ?>//";
+//        $.ajax({
+//            url: url,
+//            dataType: "JSON",
+//            method: "POST",
+//            data: {'id': id, 'nomor_meja': nomor_meja},
+//            success: function (d) {
+//                loadCart(d.data);
+//            }
+//        });
+//    }
+//
+//    function add(id) {
+//        let url = "<?//= base_url('pelayan/add') ?>//";
+//        $.ajax({
+//            url: url,
+//            dataType: "JSON",
+//            method: "POST",
+//            data: {'id': id, 'nomor_meja': nomor_meja},
+//            success: function (d) {
+//                loadCart(d.data);
+//            }
+//        });
+//    }
+//
+//    function minus(id) {
+//        let url = "<?//= base_url('pelayan/minus') ?>//";
+//        $.ajax({
+//            url: url,
+//            dataType: "JSON",
+//            method: "POST",
+//            data: {'id': id, 'nomor_meja': nomor_meja},
+//            success: function (d) {
+//                loadCart(d.data);
+//            }
+//        });
+//    }
+//
+//    function add_menu(id) {
+//        let url = "<?//= base_url('pelayan/add_menu') ?>//";
+//        $.ajax({
+//            url: url,
+//            dataType: "JSON",
+//            method: "POST",
+//            data: {'id': id, 'nomor_meja': nomor_meja},
+//            success: function (d) {
+//                $("#modalMenu").modal("hide");
+//                loadCart(d.data);
+//            }
+//        });
+//    }
+//
+//</script>
 
 </body>
 

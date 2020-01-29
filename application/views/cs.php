@@ -1,4 +1,0 @@
-<div>
-	Halo cs
-</div>
-

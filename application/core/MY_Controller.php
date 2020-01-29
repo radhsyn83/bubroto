@@ -23,13 +23,13 @@ class MY_Controller extends CI_Controller {
 					echo($this->load->view('koki/main', $data, true));
 					break;
 				case 3:
-					echo($this->load->view('kasir', $data, true));
+					echo($this->load->view('kasir/main', $data, true));
 					break;
 				case 4:
-					echo($this->load->view('pantry', $data, true));
+					echo($this->load->view('pantry/main', $data, true));
 					break;
 				case 5:
-					echo($this->load->view('cs', $data, true));
+					echo($this->load->view('cs/main', $data, true));
 					break;
 				default:
 					$this->session->sess_destroy();
