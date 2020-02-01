@@ -55,7 +55,8 @@
 				<a class="nav-link has-icon active" href="javascript:void(0)"><i class="fa fa-home"></i>Dashboard</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link has-icon" onclick="logout()" href="javascript:void(0)"><i class="material-icons">exit_to_app</i> Logout</a>
+				<a class="nav-link has-icon" onclick="logout()" href="javascript:void(0)"><i class="material-icons">exit_to_app</i>
+					Logout</a>
 			</li>
 		</ul>
 	</div>
@@ -99,8 +100,8 @@
 			<div class="col-9">
 				<div class="list-with-gap">
 					<button id="bt-menu" type="button" class="btn btn-success" disabled>Menu</button>
-<!--					<button id="bt-pembayaran" type="button" class="btn btn-primary" disabled>Pembayaran</button>-->
-				</div>	</div>
+				</div>
+			</div>
 		</div>
 
 		<br>
@@ -119,7 +120,9 @@
 			</thead>
 			<tbody id="body-cart">
 			<tr>
-				<td colspan="7"><center>Meja belum dipilih.</center></td>
+				<td colspan="7">
+					<center>Meja belum dipilih.</center>
+				</td>
 			</tr>
 			</tbody>
 		</table>
@@ -136,19 +139,22 @@
 		text-align: end;
 		font-weight: 600;
 		font-size: larger;
-		">x0</td>
+		">x0
+				</td>
 			</tr>
 			<tr>
 				<td style="
     color: gray;
     font-size: medium;
     width: 150px;
-">Total Harga</td>
+">Total Harga
+				</td>
 				<td id="cart-total" style="
     text-align: end;
     font-weight: 600;
     font-size: larger;
-">Rp0</td>
+">Rp0
+				</td>
 			</tr>
 		</table>
 
@@ -157,7 +163,8 @@
 
 
 	<!--Modal-->
-	<div class="modal fade" id="modalMenu" tabindex="-1" role="dialog" aria-labelledby="basicModalLabel" aria-hidden="true">
+	<div class="modal fade" id="modalMenu" tabindex="-1" role="dialog" aria-labelledby="basicModalLabel"
+		 aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -198,22 +205,22 @@
 <div class="sidebar-backdrop" id="sidebarBackdrop" data-toggle="sidebar"></div>
 
 <!-- Main Scripts -->
-<script src="<?= base_url('assets/js/script.min.js')?>"></script>
-<script src="<?= base_url('assets/js/app.min.js')?>"></script>
+<script src="<?= base_url('assets/js/script.min.js') ?>"></script>
+<script src="<?= base_url('assets/js/app.min.js') ?>"></script>
 
 <!-- Plugins -->
-<script src="<?= base_url('assets/plugins/jquery-sparkline/jquery.sparkline.min.js')?>"></script>
-<script src="<?= base_url('assets/plugins/chart.js/Chart.min.js')?>"></script>
-<script src="<?= base_url('assets/plugins/jqvmap/jquery.vmap.min.js')?>"></script>
-<script src="<?= base_url('assets/plugins/jqvmap/maps/jquery.vmap.usa.js')?>"></script>
-<script src="<?= base_url('assets/plugins/noty/noty.min.js')?>"></script>
-<script src="<?= base_url('assets/plugins/bootbox/bootbox.min.js')?>"></script>
-<script src="<?= base_url('assets/plugins/flatpickr/flatpickr.min.js')?>"></script>
-<script src="<?= base_url('assets/plugins/flatpickr/plugins/monthSelect/index.js')?>"></script>
-<script src="<?= base_url('assets/plugins/clockpicker/bootstrap-clockpicker.min.js')?>"></script>
-<script src="<?= base_url('assets/plugins/datatables/jquery.dataTables.bootstrap4.responsive.min.js')?>"></script>
-<script src="<?= base_url('assets/plugins/datatables/jquery.dataTables.bootstrap4.responsive.min.js')?>"></script>
-<script src="<?= base_url('assets/plugins/dateformat.min.js')?>"></script>
+<script src="<?= base_url('assets/plugins/jquery-sparkline/jquery.sparkline.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/chart.js/Chart.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/jqvmap/jquery.vmap.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/jqvmap/maps/jquery.vmap.usa.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/noty/noty.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/bootbox/bootbox.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/flatpickr/flatpickr.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/flatpickr/plugins/monthSelect/index.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/clockpicker/bootstrap-clockpicker.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/datatables/jquery.dataTables.bootstrap4.responsive.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/datatables/jquery.dataTables.bootstrap4.responsive.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/dateformat.min.js') ?>"></script>
 
 <script>
     $("#loadingBox").on("click", function (e) {
@@ -229,7 +236,7 @@
     });
 
     function menuOpen(identity, menu) {
-        let url = "<?= base_url('pelayan/') ?>"+menu;
+        let url = "<?= base_url('pelayan/') ?>" + menu;
         console.log(url);
         $.ajax({
             url: url,
@@ -280,10 +287,10 @@
                 a = "";
                 for (let i = 0; i < d.length; i++) {
                     a += '<tr>\n' +
-                        '\t\t\t\t\t\t\t\t<td scope="col">'+(i+1)+'</td>\n' +
-                        '\t\t\t\t\t\t\t\t<td scope="col">'+d[i].nama+'</td>\n' +
-                        '\t\t\t\t\t\t\t\t<td scope="col">'+d[i].harga+'</td>\n' +
-                        '\t\t\t\t\t\t\t\t<td scope="col"><button type="button" class="btn btn-success btn-xs" onclick="add_menu(\''+d[i].id+'\')">Pilih</button></td>\n' +
+                        '\t\t\t\t\t\t\t\t<td scope="col">' + (i + 1) + '</td>\n' +
+                        '\t\t\t\t\t\t\t\t<td scope="col">' + d[i].nama + '</td>\n' +
+                        '\t\t\t\t\t\t\t\t<td scope="col">' + d[i].harga + '</td>\n' +
+                        '\t\t\t\t\t\t\t\t<td scope="col"><button type="button" class="btn btn-success btn-xs" onclick="add_menu(\'' + d[i].id + '\')">Pilih</button></td>\n' +
                         '\t\t\t\t\t\t\t</tr>'
                 }
 
@@ -292,13 +299,13 @@
         });
     }
 
-	$('#bt-menu').on("click",function (e) {
+    $('#bt-menu').on("click", function (e) {
         $('#modalMenu').modal('show');
         get_menu();
     });
 
     function get_meja() {
-		nomor_meja = $('#nomor_meja').val();
+        nomor_meja = $('#nomor_meja').val();
         let url = "<?= base_url('pelayan/get_meja') ?>";
 
         $.ajax({
@@ -326,16 +333,16 @@
                 } else if (carts[i].status === "1") {
                     status = '<span class="badge badge-warning">waiting</span>';
                     btn = '<div class="btn-group" role="group">\n' +
-                        '                <button type="button" class="btn btn-text-primary btn-icon rounded-circle" onclick="add(\''+carts[i].id+'\')" ><i class="material-icons">add</i></button>\n' +
-                        '                <button type="button" class="btn btn-text-success btn-icon rounded-circle" onclick="minus(\''+carts[i].id+'\')" ><i class="material-icons">remove</i></button>\n' +
-                        '                <button type="button" class="btn btn-text-danger btn-icon rounded-circle" onclick="hapus(\''+carts[i].id+'\')" ><i class="material-icons">delete</i></button>\n' +
+                        '                <button type="button" class="btn btn-text-primary btn-icon rounded-circle" onclick="add(\'' + carts[i].id + '\')" ><i class="material-icons">add</i></button>\n' +
+                        '                <button type="button" class="btn btn-text-success btn-icon rounded-circle" onclick="minus(\'' + carts[i].id + '\')" ><i class="material-icons">remove</i></button>\n' +
+                        '                <button type="button" class="btn btn-text-danger btn-icon rounded-circle" onclick="hapus(\'' + carts[i].id + '\')" ><i class="material-icons">delete</i></button>\n' +
                         '              </div>'
                 } else if (carts[i].status === "2") {
                     status = '<span class="badge badge-primary">proses</span>';
-                    btn = '<button type="button" class="btn btn-success btn-xs" onclick="set_selesai(\''+carts[i].id+'\')">Selesai</button>'
+                    btn = '<button type="button" class="btn btn-success btn-xs" onclick="set_selesai(\'' + carts[i].id + '\')">Selesai</button>'
                 } else if (carts[i].status === "3") {
                     status = '<span class="badge badge-success">selesai</span>';
-                }else {
+                } else {
                     status = '<span class="badge badge-secondary">habis</span>';
                 }
                 let total_harga = carts[i].harga * carts[i].jumlah
@@ -345,9 +352,9 @@
                     "\t\t<td>" + carts[i].nama_menu + "</td>\n" +
                     "\t\t<td class=\"font-number\">" + carts[i].harga + "</td>\n" +
                     "\t\t<td>" + carts[i].jumlah + "</td>\n" +
-                    "\t\t<td>"+status+"</td>\n" +
+                    "\t\t<td>" + status + "</td>\n" +
                     "\t\t<td class=\"font-number\">" + total_harga + "</td>\n" +
-                    "\t\t<td>"+ btn +"</td>\n" +
+                    "\t\t<td>" + btn + "</td>\n" +
                     "\t</tr>"
             }
             $('#body-cart').html(a);
@@ -358,8 +365,8 @@
                 "\t</tr>");
         }
 
-        $('#cart-item').html('x'+c.grand.total_item);
-        $('#cart-total').html('Rp'+c.grand.total_harga);
+        $('#cart-item').html('x' + c.grand.total_item);
+        $('#cart-total').html('Rp' + c.grand.total_harga);
 
         $('#bt-menu').prop("disabled", false);
         $('#bt-pembayaran').prop("disabled", false);

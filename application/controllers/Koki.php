@@ -29,6 +29,7 @@ class Koki extends CI_Controller
 			->from("detail_pesanan dp")
 			->join("pesanan ps", "dp.id_pesanan = ps.id")
 			->where("dp.status = 1")
+			->where("ps.status = 0")
 			->get();
 
 		$total = 0;

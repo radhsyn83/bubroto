@@ -55,7 +55,8 @@
 				<a class="nav-link has-icon active" href="javascript:void(0)"><i class="fa fa-home"></i>Dashboard</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link has-icon" onclick="logout()" href="javascript:void(0)"><i class="material-icons">exit_to_app</i> Logout</a>
+				<a class="nav-link has-icon" onclick="logout()" href="javascript:void(0)"><i class="material-icons">exit_to_app</i>
+					Logout</a>
 			</li>
 		</ul>
 	</div>
@@ -91,7 +92,16 @@
 			<p class="text-muted font-size-sm" id="total-request">
 				Daftar kuisioner pelanggan
 			</p>
-			<button type="button" class="btn btn-primary" onclick="showModal()" data-dismiss="modal">Tambah kuisioner</button>
+			<div class="row">
+				<div class="col-4">
+					<div class="input-group">
+						<input id="pembayaran_id" type="text" class="form-control" placeholder="Nomor pembayaran">
+						<div class="input-group-append">
+							<button onclick="getPembayaran()" id="bt-kuisioner" class="btn btn-light" type="button">Tambah</button>
+						</div>
+					</div>
+				</div>
+			</div>
 			<br>
 			<br>
 		</section>
@@ -102,16 +112,17 @@
 				<th scope="col">#</th>
 				<th scope="col">No. Pembayaran</th>
 				<th scope="col">Pelanggan</th>
-				<th scope="col">Catatan</th>
-				<th scope="col">CS</th>
-				<th scope="col">Pelayan</th>
-				<th scope="col">Kasir</th>
+				<th scope="col">Makanan</th>
+				<th scope="col">Minuman</th>
+				<th scope="col">Pelayanan</th>
 				<th scope="col">Tanggal</th>
 			</tr>
 			</thead>
 			<tbody id="body-kuisioner">
 			<tr>
-				<td colspan="7"><center>Belum ada kuisioner.</center></td>
+				<td colspan="7">
+					<center>Belum ada kuisioner.</center>
+				</td>
 			</tr>
 			</tbody>
 		</table>
@@ -135,21 +146,80 @@
 			<form id="kuisioner-form">
 
 				<div class="modal-body">
-					<input type="hidden" class="form-control" id="f_id" name="f_id">
-					<input type="hidden" class="form-control" id="f_id_menu" name="f_id_menu">
-					<div class="form-group">
-						<label for="f_pembayaran">No. Pembayaran</label>
-						<select class="form-control" id="f_pembayaran" name="f_pembayaran"></select>
-					</div>
+					<input type="hidden" class="form-control" id="f_pembayaran" name="f_pembayaran">
 					<div class="form-group">
 						<label for="f_pelanggan">Nama Pelanggan</label>
 						<input type="text" class="form-control" id="f_pelanggan" name="f_pelanggan"
 							   placeholder="Masukkan nama pelanggan">
 					</div>
 					<div class="form-group">
-						<label for="f_note">Catatan</label>
-						<textarea type="text" class="form-control" id="f_note" name="f_note"
-								  placeholder="Masukkan catatan dari pelanggan"></textarea>
+						<label for="f_note">Makanan</label>
+						<div class="row">
+							<div class="col-md-3">
+								<div class="custom-control custom-radio">
+									<input type="radio" name="makanan" class="custom-control-input" id="makanan1" value="1">
+									<label class="custom-control-label" for="makanan1">Buruk</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="custom-control custom-radio">
+									<input type="radio" name="makanan" class="custom-control-input" id="makanan2" value="2">
+									<label class="custom-control-label" for="makanan2">Baik</label>
+								</div>
+							</div>
+							<div class="col-md">
+								<div class="custom-control custom-radio">
+									<input type="radio" name="makanan" class="custom-control-input" id="makanan3" value="3">
+									<label class="custom-control-label" for="makanan3">Sangat Baik</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="f_note">Minuman</label>
+						<div class="row">
+							<div class="col-md-3">
+								<div class="custom-control custom-radio">
+									<input type="radio" name="minuman" class="custom-control-input" id="minuman1" value="1">
+									<label class="custom-control-label" for="minuman1">Buruk</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="custom-control custom-radio">
+									<input type="radio" name="minuman" class="custom-control-input" id="minuman2" value="2">
+									<label class="custom-control-label" for="minuman2">Baik</label>
+								</div>
+							</div>
+							<div class="col-md">
+								<div class="custom-control custom-radio">
+									<input type="radio" name="minuman" class="custom-control-input" id="minuman3" value="3">
+									<label class="custom-control-label" for="minuman3">Sangat Baik</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label>Pelayanan</label>
+						<div class="row">
+							<div class="col-md-3">
+								<div class="custom-control custom-radio">
+									<input type="radio" name="pelayanan" class="custom-control-input" id="pelayanan1" value="1">
+									<label class="custom-control-label" for="pelayanan1">Buruk</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="custom-control custom-radio">
+									<input type="radio" name="pelayanan" class="custom-control-input" id="pelayanan2" value="2">
+									<label class="custom-control-label" for="pelayanan2">Baik</label>
+								</div>
+							</div>
+							<div class="col-md">
+								<div class="custom-control custom-radio">
+									<input type="radio" name="pelayanan" class="custom-control-input" id="pelayanan3" value="3">
+									<label class="custom-control-label" for="pelayanan3">Sangat Baik</label>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -166,22 +236,22 @@
 <div class="sidebar-backdrop" id="sidebarBackdrop" data-toggle="sidebar"></div>
 
 <!-- Main Scripts -->
-<script src="<?= base_url('assets/js/script.min.js')?>"></script>
-<script src="<?= base_url('assets/js/app.min.js')?>"></script>
+<script src="<?= base_url('assets/js/script.min.js') ?>"></script>
+<script src="<?= base_url('assets/js/app.min.js') ?>"></script>
 
 <!-- Plugins -->
-<script src="<?= base_url('assets/plugins/jquery-sparkline/jquery.sparkline.min.js')?>"></script>
-<script src="<?= base_url('assets/plugins/chart.js/Chart.min.js')?>"></script>
-<script src="<?= base_url('assets/plugins/jqvmap/jquery.vmap.min.js')?>"></script>
-<script src="<?= base_url('assets/plugins/jqvmap/maps/jquery.vmap.usa.js')?>"></script>
-<script src="<?= base_url('assets/plugins/noty/noty.min.js')?>"></script>
-<script src="<?= base_url('assets/plugins/bootbox/bootbox.min.js')?>"></script>
-<script src="<?= base_url('assets/plugins/flatpickr/flatpickr.min.js')?>"></script>
-<script src="<?= base_url('assets/plugins/flatpickr/plugins/monthSelect/index.js')?>"></script>
-<script src="<?= base_url('assets/plugins/clockpicker/bootstrap-clockpicker.min.js')?>"></script>
-<script src="<?= base_url('assets/plugins/datatables/jquery.dataTables.bootstrap4.responsive.min.js')?>"></script>
-<script src="<?= base_url('assets/plugins/datatables/jquery.dataTables.bootstrap4.responsive.min.js')?>"></script>
-<script src="<?= base_url('assets/plugins/dateformat.min.js')?>"></script>
+<script src="<?= base_url('assets/plugins/jquery-sparkline/jquery.sparkline.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/chart.js/Chart.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/jqvmap/jquery.vmap.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/jqvmap/maps/jquery.vmap.usa.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/noty/noty.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/bootbox/bootbox.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/flatpickr/flatpickr.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/flatpickr/plugins/monthSelect/index.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/clockpicker/bootstrap-clockpicker.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/datatables/jquery.dataTables.bootstrap4.responsive.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/datatables/jquery.dataTables.bootstrap4.responsive.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/dateformat.min.js') ?>"></script>
 
 <script>
     function get_kuisioner() {
@@ -196,20 +266,29 @@
                 a = "";
                 for (let i = 0; i < d.length; i++) {
                     a += '<tr>\n' +
-                        '\t\t\t\t\t\t\t\t<td scope="col">'+(i+1)+'</td>\n' +
-                        '\t\t\t\t\t\t\t\t<td scope="col">'+d[i].id+'</td>\n' +
-                        '\t\t\t\t\t\t\t\t<td scope="col">'+d[i].nama_pelanggan+'</td>\n' +
-                        '\t\t\t\t\t\t\t\t<td scope="col"><b>'+d[i].note+'</td>\n' +
-                        '\t\t\t\t\t\t\t\t<td scope="col">'+d[i].nama_cs+'</td>\n' +
-                        '\t\t\t\t\t\t\t\t<td scope="col">'+d[i].nama_pelayan+'</td>\n' +
-                        '\t\t\t\t\t\t\t\t<td scope="col">'+d[i].nama_kasir+'</td>\n' +
-                        '\t\t\t\t\t\t\t\t<td scope="col">'+d[i].date_add+'</td>\n' +
+                        '\t\t\t\t\t\t\t\t<td scope="col">' + (i + 1) + '</td>\n' +
+                        '\t\t\t\t\t\t\t\t<td scope="col">' + d[i].id_pembayaran + '</td>\n' +
+                        '\t\t\t\t\t\t\t\t<td scope="col">' + d[i].nama_pelanggan + '</td>\n' +
+                        '\t\t\t\t\t\t\t\t<td scope="col">' + get_score(d[i].makanan) + '</td>\n' +
+                        '\t\t\t\t\t\t\t\t<td scope="col">' + get_score(d[i].minuman) + '</td>\n' +
+                        '\t\t\t\t\t\t\t\t<td scope="col">' + get_score(d[i].pelayanan) + '</td>\n' +
+                        '\t\t\t\t\t\t\t\t<td scope="col">' + d[i].date_add + '</td>\n' +
                         '\t\t\t\t\t\t\t</tr>'
                 }
 
                 $('#body-kuisioner').html(a);
             }
         });
+    }
+
+    function get_score(i) {
+		if (i === "1") {
+		    return "Buruk"
+		} else if (i === "2") {
+		    return "Baik"
+		} else {
+		    return "Sangat Baik"
+		}
     }
 
     get_kuisioner()
@@ -227,30 +306,35 @@
         });
     }
 
-    function showModal() {
-        $("#modalKuisioner").modal("show");
-        $("#f_pelanggan").val("");
-        $("#f_note").val("");
+    function getPembayaran() {
+        var id = $("#pembayaran_id").val()
 
         let url = "<?= base_url('cs/get_pembayaran') ?>";
         $.ajax({
             url: url,
             dataType: "JSON",
             method: "POST",
+			data: { "id": id },
+			beforeSend: function() {
+                $("#bt-kuisioner").prop("disabled", true);
+			},
             success: function (m) {
-                let d = m.data;
-                a = "";
-                for (let i = 0; i < d.length; i++) {
-                    a += '<option value="'+ d[i].id +'">No. Pembayaran : '+ d[i].id +'</option>'
-                }
-
-                $('#f_pembayaran').html(a);
+                $("#bt-kuisioner").prop("disabled", false);
+               	if (m.error === 1) {
+               	    alert(m.msg)
+				} else {
+                    showModal(m)
+				}
             }
         });
     }
+    function showModal(m) {
+        $("#modalKuisioner").modal("show");
+        $("#f_pembayaran").val(m.data.id);
+    }
 
-	$("#kuisioner-form").on("submit", function (e) {
-		e.preventDefault()
+    $("#kuisioner-form").on("submit", function (e) {
+        e.preventDefault()
         let url = "<?= base_url('cs/insert_kuisioner') ?>";
 
         $.ajax({

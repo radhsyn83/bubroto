@@ -31,6 +31,9 @@ class MY_Controller extends CI_Controller {
 				case 5:
 					echo($this->load->view('cs/main', $data, true));
 					break;
+				case 6:
+					echo($this->load->view('pemilik/main', $data, true));
+					break;
 				default:
 					$this->session->sess_destroy();
 					redirect("auth");

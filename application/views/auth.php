@@ -71,7 +71,6 @@
             dataType: "JSON",
             method: "POST",
             success: function (data) {
-                console.log(data);
                 showNotif(data);
 
                 if (data["error"] === 0) {

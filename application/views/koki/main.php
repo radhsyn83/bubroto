@@ -152,6 +152,7 @@
 
     function resetMenu() {
         $('#pesanan').removeClass("active");
+        $('#bahanbaku').removeClass("active");
         $('#menulist').removeClass("active");
     }
 
